@@ -2,20 +2,16 @@
 import numpy as np
 
 
-class BaseEstimator(object):
-    X = None
-    y = None
+class BaseEstimator:
     y_required = True
     fit_required = True
 
     def _setup_input(self, X, y=None):
         """Ensure inputs to an estimator are in the expected format.
-
         Ensures X and y are stored as numpy ndarrays by converting from an
         array-like object if necessary. Enables estimators to define whether
         they require a set of y target values or not with y_required, e.g.
         kmeans clustering requires no target labels and is fit against only X.
-
         Parameters
         ----------
         X : array-like
@@ -28,7 +24,7 @@ class BaseEstimator(object):
             X = np.array(X)
 
         if X.size == 0:
-            raise ValueError("Number of features must be > 0")
+            raise ValueError("Got an empty matrix.")
 
         if X.ndim == 1:
             self.n_samples, self.n_features = 1, X.shape
@@ -45,7 +41,7 @@ class BaseEstimator(object):
                 y = np.array(y)
 
             if y.size == 0:
-                raise ValueError("Number of targets must be > 0")
+                raise ValueError("The targets array must be no-empty.")
 
         self.y = y
 
